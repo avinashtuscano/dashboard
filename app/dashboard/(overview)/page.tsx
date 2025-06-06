@@ -9,11 +9,6 @@ import {
   LatestInvoicesSkeleton,
   RevenueChartSkeleton,
 } from "@/app/ui/skeletons";
-import {
-  fetchLatestInvoices,
-  fetchRevenue,
-  fetchCardData,
-} from "../../lib/data";
 
 export default async function Page() {
   // const revenue = await fetchRevenue();

@@ -51,6 +51,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
   try {
     await sql`INSERT INTO invoices (customer_id, amount, status, date) VALUES (${customerId}, ${amountInCents}, ${status}, ${date})`;
   } catch (error) {
+    console.log(error);
     return {
       message: "Database Error: Failed to Create Invoice.",
     };
@@ -60,17 +61,17 @@ export async function createInvoice(prevState: State, formData: FormData) {
   redirect("/dashboard/invoices");
 }
 
-const UpdateFormSchema = z.object({
-  id: z.string(),
-  customerId: z.string({ invalid_type_error: "Please select a customer" }),
-  amount: z.coerce
-    .number()
-    .gt(0, { message: "Please enter a value greater than $0." }),
-  status: z.enum(["pending", "paid"], {
-    invalid_type_error: "Please select an invoice status",
-  }),
-  date: z.string(),
-});
+// const UpdateFormSchema = z.object({
+//   id: z.string(),
+//   customerId: z.string({ invalid_type_error: "Please select a customer" }),
+//   amount: z.coerce
+//     .number()
+//     .gt(0, { message: "Please enter a value greater than $0." }),
+//   status: z.enum(["pending", "paid"], {
+//     invalid_type_error: "Please select an invoice status",
+//   }),
+//   date: z.string(),
+// });
 
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
@@ -100,6 +101,7 @@ export async function updateInvoice(
   WHERE id = ${id}
 `;
   } catch (error) {
+    console.log(error);
     return {
       message: "Database Error: Failed to Update Invoice.",
     };
